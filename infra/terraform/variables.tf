@@ -102,7 +102,7 @@ variable "master_authorized_cidrs" {
     display_name = string
   }))
   description = "Authorized networks for GKE control plane (dev home IP, bastion, etc.)."
-  default       = []
+  default     = []
 }
 
 variable "frontend_cors_origin" {

@@ -4,10 +4,10 @@ region      = "us-east1"
 zone        = "us-east1-b"
 environment = "prod"
 
-cluster_name         = "creativeiq-gke-prod"
-bucket_name_prefix   = "creativeiq"
-db_name              = "creative_intelligence"
-db_user              = "ci_user"
+cluster_name       = "creativeiq-gke-prod"
+bucket_name_prefix = "creativeiq"
+db_name            = "creative_intelligence"
+db_user            = "ci_user"
 
 redis_memory_size_gb = 5
 redis_tier           = "STANDARD_HA"
@@ -28,7 +28,7 @@ master_authorized_cidrs = []
 frontend_cors_origin = "https://REPLACE_WITH_APP_HOSTNAME"
 domain               = "REPLACE_WITH_APP_HOSTNAME"
 
-enable_composer             = true
+enable_composer           = true
 composer_environment_name = "creativeiq-composer-prod"
 composer_image_version    = "composer-3-airflow-2.10.2-build.5"
 

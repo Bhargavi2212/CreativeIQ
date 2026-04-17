@@ -22,8 +22,8 @@ variable "database_url" {
 }
 
 variable "redis_url" {
-  type        = string
-  sensitive   = true
+  type      = string
+  sensitive = true
 }
 
 variable "bucket_ids" {
@@ -39,9 +39,9 @@ variable "gemini_api_key" {
 }
 
 variable "snowflake_password" {
-  type        = string
-  sensitive   = true
-  default     = ""
+  type      = string
+  sensitive = true
+  default   = ""
 }
 
 variable "rotation_reminder_label" {

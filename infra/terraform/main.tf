@@ -65,17 +65,17 @@ module "memorystore" {
 module "gke" {
   source = "./modules/gke"
 
-  project_id                = var.project_id
-  region                    = var.region
-  cluster_name              = var.cluster_name
-  network_self_link         = module.vpc.network_self_link
-  subnetwork_self_link      = module.vpc.subnet_gke_self_link
-  general_min_nodes         = var.gke_general_min_nodes
-  general_max_nodes         = var.gke_general_max_nodes
-  processing_min_nodes      = var.gke_processing_min_nodes
-  processing_max_nodes      = var.gke_processing_max_nodes
-  use_preemptible           = var.gke_use_preemptible
-  master_authorized_cidrs   = var.master_authorized_cidrs
+  project_id              = var.project_id
+  region                  = var.region
+  cluster_name            = var.cluster_name
+  network_self_link       = module.vpc.network_self_link
+  subnetwork_self_link    = module.vpc.subnet_gke_self_link
+  general_min_nodes       = var.gke_general_min_nodes
+  general_max_nodes       = var.gke_general_max_nodes
+  processing_min_nodes    = var.gke_processing_min_nodes
+  processing_max_nodes    = var.gke_processing_max_nodes
+  use_preemptible         = var.gke_use_preemptible
+  master_authorized_cidrs = var.master_authorized_cidrs
 
   depends_on = [module.vpc]
 }
@@ -83,12 +83,12 @@ module "gke" {
 module "iam" {
   source = "./modules/iam"
 
-  project_id    = var.project_id
-  region        = var.region
-  environment   = var.environment
-  database_url  = local.database_url
-  redis_url     = local.redis_url
-  bucket_ids    = module.gcs.bucket_names
+  project_id         = var.project_id
+  region             = var.region
+  environment        = var.environment
+  database_url       = local.database_url
+  redis_url          = local.redis_url
+  bucket_ids         = module.gcs.bucket_names
   gemini_api_key     = var.bootstrap_gemini_api_key
   snowflake_password = var.bootstrap_snowflake_password
 
@@ -104,12 +104,12 @@ module "composer" {
   count  = var.enable_composer ? 1 : 0
   source = "./modules/composer"
 
-  project_id         = var.project_id
-  region             = var.region
-  network            = module.vpc.network_self_link
-  subnetwork         = module.vpc.subnet_data_self_link
-  environment_name   = var.composer_environment_name
-  image_version      = var.composer_image_version
+  project_id       = var.project_id
+  region           = var.region
+  network          = module.vpc.network_self_link
+  subnetwork       = module.vpc.subnet_data_self_link
+  environment_name = var.composer_environment_name
+  image_version    = var.composer_image_version
 
   depends_on = [module.vpc]
 }
