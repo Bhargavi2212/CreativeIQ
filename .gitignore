@@ -22,6 +22,9 @@ wheels/
 *.egg
 .venv/
 venv/
+.ci-venv-test/
+.ci-venv-test2/
+.ci-venv-test3/
 ENV/
 
 # Env

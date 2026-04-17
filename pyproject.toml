@@ -32,7 +32,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-google = ["google-cloud-storage>=2.18.0", "google-generativeai>=0.8.0"]
+# Exact pins: open-ended google-* ranges cause pip "resolution-too-deep" when combined
+# with dbt + Snowflake on Linux CI (google-api-core / protobuf backtracking).
+google = ["google-cloud-storage==2.19.0", "google-generativeai==0.8.4"]
 # dbt + Snowflake for transforms and sync scripts. Apache Airflow is NOT listed here: it
 # ballooned the resolver (Airflow 3 + Google SDKs hit pip "resolution-too-deep") and the
 # runtime uses the official Airflow Docker image anyway—see optional `airflow` extra.

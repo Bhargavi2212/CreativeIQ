@@ -184,7 +184,7 @@ Bucket names default to `ci-dev-*` prefixes; override with `STORAGE_BUCKET_*` if
 
 Declared in `pyproject.toml`:
 
-- `google` — GCS / Gemini client libraries
+- `google` — GCS / Gemini (`google-cloud-storage` + `google-generativeai`, exact pins in `pyproject.toml` so pip can resolve with dbt/Snowflake on CI)
 - `decomposition` — ffmpeg stack, OpenCV, librosa, Whisper, etc.
 - `profile_engine` — scipy, sklearn, Snowflake
 - `chat` / `generation` — LangGraph, LangChain core, document output helpers
