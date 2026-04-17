@@ -1,5 +1,6 @@
-# Copy to backend.hcl (do not commit real bucket names if policy forbids) and run:
-#   terraform init -backend-config=backend.hcl
+# Prefer: from repo root run `bash scripts/terraform_apply_dev_gcp.sh` (writes backend.hcl + bucket).
+# Or copy this file to backend.hcl, set bucket/prefix, then:
+#   cd infra/terraform && terraform init -backend-config=backend.hcl
 #
 bucket = "creativeiq-terraform-state-YOURORG-dev"
 prefix = "terraform/state/dev"

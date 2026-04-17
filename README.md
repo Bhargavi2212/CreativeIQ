@@ -194,6 +194,19 @@ Install combinations with e.g. `pip install -e ".[dev,google,decomposition]"` as
 
 ---
 
+## GCP dev: create the cluster with Terraform
+
+GitHub **Deploy** expects a regional GKE cluster named **`creativeiq-gke-dev`** in the project from `infra/terraform/environments/dev/terraform.tfvars` (see `cluster_name` / `region`). If the GKE list in the console is empty, run Terraform from **Google Cloud Shell** (or any machine with `gcloud` + `terraform` and project Owner/Editor):
+
+```bash
+# Clone your repo in Cloud Shell, cd to repo root, then:
+bash scripts/terraform_apply_dev_gcp.sh
+```
+
+The script enables common APIs, creates a GCS state bucket `gs://<project_id>-tf-state` (unless `TF_STATE_BUCKET` is set), writes `infra/terraform/backend.hcl` (gitignored), runs `terraform init` and `terraform apply` with dev tfvars. First apply often takes **20–40 minutes**. Optional: set `TF_VAR_terraform_deployer_email` to your GitHub deployer service account email so Artifact Registry grants `writer` for CI pushes.
+
+---
+
 ## Troubleshooting
 
 - **Docker build fails or hangs on “unpacking”** — Often disk pressure (especially on a full system drive) or an unstable Docker daemon. Free disk space, prune unused images/volumes, and consider moving Docker’s data root to a larger drive. Avoid unnecessary `--no-cache` until the engine is healthy.
