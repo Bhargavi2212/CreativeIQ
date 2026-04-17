@@ -83,6 +83,9 @@ dev = [
     "Pillow>=10.4.0",
     "prometheus_client>=0.21.0",
     "scipy>=1.14.1",
+    # shared.utils.db_sync builds a psycopg2 engine at import; required for pytest collection
+    # when chat/ab_testing routes pull sync_session (CI uses .[dev,...] not decomposition).
+    "psycopg2-binary>=2.9.10",
 ]
 
 [tool.setuptools.packages.find]
