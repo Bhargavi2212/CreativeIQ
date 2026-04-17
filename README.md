@@ -188,7 +188,7 @@ Declared in `pyproject.toml`:
 - `decomposition` — ffmpeg stack, OpenCV, librosa, Whisper, etc.
 - `profile_engine` — scipy, sklearn, Snowflake
 - `chat` / `generation` — LangGraph, LangChain core, document output helpers
-- `analytics` — Snowflake, dbt, Airflow client stack for heavier offline work
+- `analytics` — Snowflake connector, pandas, dbt (Snowflake); Airflow itself runs in Docker / Composer, optional `airflow` extra pins Airflow 2.x for rare local pip installs
 
 Install combinations with e.g. `pip install -e ".[dev,google,decomposition]"` as needed.
 
