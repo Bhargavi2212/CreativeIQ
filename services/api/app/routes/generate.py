@@ -26,6 +26,12 @@ from services.generation.schemas import (
     GenerationJobStatusResponse,
     normalize_feedback_rating,
 )
+from services.generation.tasks import run_generation_job
+from shared.models.db import User
+from shared.models.enums import BrandRole, EventSource, EventType
+from shared.models.schemas import PaginatedResponse
+from shared.utils.db import get_db
+from shared.utils.db_sync import sync_session
 
 
 def _brief_chips_from_result(result: dict | None) -> tuple[str | None, str | None, str | None]:
@@ -49,12 +55,7 @@ def _brief_chips_from_result(result: dict | None) -> tuple[str | None, str | Non
         elif name in ("emotional_tone", "tone", "emotional tone") and tone is None:
             tone = rec[:80]
     return hook, duration, tone
-from services.generation.tasks import run_generation_job
-from shared.models.db import GenerationJob, User
-from shared.models.enums import BrandRole, EventSource, EventType
-from shared.models.schemas import PaginatedResponse
-from shared.utils.db import get_db
-from shared.utils.db_sync import sync_session
+
 
 log = structlog.get_logger()
 

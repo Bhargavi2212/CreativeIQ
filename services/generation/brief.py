@@ -6,7 +6,7 @@ import json
 from typing import Any
 
 from shared.config.settings import settings
-from shared.utils.gemini import GeminiError, generate_json
+from shared.utils.gemini import generate_json
 
 
 def _build_prompt(

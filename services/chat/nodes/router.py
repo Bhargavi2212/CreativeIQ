@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from services.chat.state import ChatTurnState
 from shared.utils.gemini import GeminiError, generate_json
 

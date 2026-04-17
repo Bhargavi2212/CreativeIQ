@@ -14,7 +14,6 @@ from sqlalchemy.orm import Session
 from shared.models.db import ABTest, AdPerformance
 from services.chat.auto_events_service import emit_ab_lifecycle_event
 from services.profile_engine import metrics
-from services.profile_engine.storage import repositories
 
 
 def _normal_cdf(x: float) -> float:

@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
 from typing import Any
 
-from sqlalchemy import and_, select
+from sqlalchemy import select
 
 from services.chat.schemas import CompareAdsInput, QueryAdPerformanceInput
 from services.chat.tools.common import tool

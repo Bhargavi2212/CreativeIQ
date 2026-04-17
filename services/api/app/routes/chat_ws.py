@@ -4,14 +4,13 @@ from __future__ import annotations
 
 import json
 import uuid
-from typing import Any
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from sqlalchemy import select
 
 from services.chat.conversation_service import ensure_conversation, persist_turn
 from services.chat.graph import execute_chat_turn
-from shared.models.db import BrandMember, User
+from shared.models.db import BrandMember
 from shared.models.enums import BrandRole, brand_role_rank
 from shared.utils.db import AsyncSessionLocal
 from shared.utils.security import JWTError, decode_access_token
