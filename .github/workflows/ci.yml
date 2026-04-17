@@ -57,7 +57,8 @@ jobs:
           )
           PY
           cd dbt_project
-          DBT_PROFILES_DIR="${RUNNER_TEMP}/dbt" python -m dbt compile --project-dir .
+          # dbt-core installs a `dbt` console script; `python -m dbt` has no __main__.
+          DBT_PROFILES_DIR="${RUNNER_TEMP}/dbt" dbt compile --project-dir .
         shell: bash
 
   frontend:
