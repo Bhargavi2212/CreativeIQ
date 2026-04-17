@@ -24,7 +24,13 @@ resource "google_sql_database_instance" "main" {
     backup_configuration {
       enabled                        = true
       point_in_time_recovery_enabled = true
-      backup_retention_days          = var.backup_retention_days
+      # google provider >= 6: backup_retention_days removed; use backup_retention_settings.
+      # Daily backups: retaining N backups approximates N days of history.
+      transaction_log_retention_days = min(var.backup_retention_days, 7)
+      backup_retention_settings {
+        retained_backups = var.backup_retention_days
+        retention_unit   = "COUNT"
+      }
     }
 
     # uuid-ossp: no Cloud SQL instance flag; enabled in-app via Alembic revision 0005_uuid_ossp.

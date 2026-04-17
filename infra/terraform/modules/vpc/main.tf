@@ -79,7 +79,6 @@ resource "google_compute_firewall" "deny_all_ingress" {
   priority = 1000
 
   direction = "INGRESS"
-  action    = "DENY"
 
   source_ranges = ["0.0.0.0/0"]
 
