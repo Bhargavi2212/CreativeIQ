@@ -7,6 +7,12 @@ locals {
     var.db_name
   )
   redis_url = format("redis://%s:%s/0", module.memorystore.host, module.memorystore.port)
+
+  # SAs that can docker push to Artifact Registry (GitHub CD uses secrets.GCP_SA_KEY).
+  artifact_registry_writer_sa_emails = distinct(compact(concat(
+    var.terraform_deployer_email != "" ? [replace(var.terraform_deployer_email, "serviceAccount:", "")] : [],
+    [for e in var.artifact_registry_writer_emails : replace(e, "serviceAccount:", "")],
+  )))
 }
 
 module "vpc" {
@@ -29,9 +35,9 @@ module "gcs" {
 module "artifact_registry" {
   source = "./modules/artifact_registry"
 
-  project_id               = var.project_id
-  region                   = var.region
-  terraform_deployer_email = var.terraform_deployer_email
+  project_id                    = var.project_id
+  region                        = var.region
+  writer_service_account_emails = local.artifact_registry_writer_sa_emails
 }
 
 module "cloud_sql" {

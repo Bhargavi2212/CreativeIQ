@@ -205,7 +205,7 @@ bash scripts/terraform_apply_dev_gcp.sh
 
 On **Windows** (Git Bash from repo root): install [Terraform](https://developer.hashicorp.com/terraform/install) (MSI puts binaries in `C:\Program Files\Terraform`). The script prepends that path for Git Bash; if it still says “terraform not found”, install Terraform or run the same script in **Cloud Shell** instead.
 
-The script enables common APIs, creates a GCS state bucket `gs://<project_id>-tf-state` (unless `TF_STATE_BUCKET` is set), writes `infra/terraform/backend.hcl` (gitignored), runs `terraform init` and `terraform apply` with dev tfvars. First apply often takes **20–40 minutes**. Optional: set `TF_VAR_terraform_deployer_email` to your GitHub deployer service account email so Artifact Registry grants `writer` for CI pushes.
+The script enables common APIs, creates a GCS state bucket `gs://<project_id>-tf-state` (unless `TF_STATE_BUCKET` is set), writes `infra/terraform/backend.hcl` (gitignored), runs `terraform init` and `terraform apply` with dev tfvars. First apply often takes **20–40 minutes**. Optional: set `artifact_registry_writer_emails` in `infra/terraform/environments/<env>/terraform.tfvars` (or `TF_VAR_terraform_deployer_email` for a single SA) to the `client_email` of the service account in `secrets.GCP_SA_KEY` so Artifact Registry grants `roles/artifactregistry.writer` for CI pushes.
 
 ---
 

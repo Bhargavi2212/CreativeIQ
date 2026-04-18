@@ -38,3 +38,9 @@ composer_environment_name = "creativeiq-composer-dev"
 composer_image_version    = "composer-3-airflow-2.10.2-build.5"
 
 terraform_deployer_email = ""
+
+# GitHub Actions (secret GCP_SA_KEY): add that key's client_email here, then terraform apply,
+# or grant manually: gcloud artifacts repositories add-iam-policy-binding creativeiq-images
+#   --location=us-east1 --project=creativeiq-493423 --role=roles/artifactregistry.writer
+#   --member="serviceAccount:YOUR_SA@creativeiq-493423.iam.gserviceaccount.com"
+artifact_registry_writer_emails = []

@@ -11,8 +11,8 @@ variable "repository_id" {
   default = "creativeiq-images"
 }
 
-variable "terraform_deployer_email" {
-  type        = string
-  description = "Optional deployer SA email for push access."
-  default     = ""
+variable "writer_service_account_emails" {
+  type        = list(string)
+  description = "Distinct SA emails (no serviceAccount: prefix) granted roles/artifactregistry.writer on the Docker repository."
+  default     = []
 }

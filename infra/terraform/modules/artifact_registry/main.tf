@@ -22,12 +22,12 @@ resource "google_artifact_registry_repository_iam_member" "gke_nodes_reader" {
   member     = "serviceAccount:${data.google_project.current.number}-compute@developer.gserviceaccount.com"
 }
 
-resource "google_artifact_registry_repository_iam_member" "deployer_writer" {
-  count = var.terraform_deployer_email != "" ? 1 : 0
+resource "google_artifact_registry_repository_iam_member" "writer" {
+  for_each = toset(var.writer_service_account_emails)
 
   project    = google_artifact_registry_repository.main.project
   location   = google_artifact_registry_repository.main.location
   repository = google_artifact_registry_repository.main.name
   role       = "roles/artifactregistry.writer"
-  member     = "serviceAccount:${var.terraform_deployer_email}"
+  member     = "serviceAccount:${each.value}"
 }

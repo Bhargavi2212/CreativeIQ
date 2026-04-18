@@ -32,6 +32,9 @@ jobs:
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Active GCP identity (needs roles/artifactregistry.writer on ${{ env.AR_REPOSITORY }})
+        run: gcloud auth list --filter=status:ACTIVE --format='table(account,status)'
+
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 

@@ -33,3 +33,6 @@ composer_environment_name = "creativeiq-composer-prod"
 composer_image_version    = "composer-3-airflow-2.10.2-build.5"
 
 terraform_deployer_email = ""
+
+# Same as dev: include GitHub Actions SA (GCP_SA_KEY client_email) for CD image pushes.
+artifact_registry_writer_emails = []

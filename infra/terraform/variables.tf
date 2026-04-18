@@ -137,8 +137,14 @@ variable "composer_environment_name" {
 
 variable "terraform_deployer_email" {
   type        = string
-  description = "Optional email of SA or user granted AR writer + GKE developer for CI (document-only if empty)."
+  description = "Optional legacy single SA email (no prefix) granted roles/artifactregistry.writer on the image repo. Prefer artifact_registry_writer_emails; values are merged."
   default     = ""
+}
+
+variable "artifact_registry_writer_emails" {
+  type        = list(string)
+  description = "Service account emails (no serviceAccount: prefix) that can push Docker images. Must include the client_email of the SA in GitHub secret GCP_SA_KEY or CD fails with uploadArtifacts denied."
+  default     = []
 }
 
 variable "bootstrap_gemini_api_key" {
