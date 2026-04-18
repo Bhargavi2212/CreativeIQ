@@ -76,6 +76,12 @@ variable "gke_use_preemptible" {
   description = "Use preemptible/spot nodes (dev cost savings)."
 }
 
+variable "gke_node_locations" {
+  type        = list(string)
+  description = "Optional zones for regional GKE nodes (default pool + custom pools). Use a single zone in dev to avoid GCE_STOCKOUT. Empty = all zones in the region."
+  default     = []
+}
+
 variable "sql_tier" {
   type        = string
   description = "Cloud SQL machine tier."

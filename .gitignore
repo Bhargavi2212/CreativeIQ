@@ -79,3 +79,6 @@ infra/terraform/backend.hcl
 infra/terraform/.terraform/
 infra/terraform/*.tfstate
 infra/terraform/*.tfstate.*
+
+# Local Terraform binary (e.g. downloaded when winget is unavailable)
+.tools/

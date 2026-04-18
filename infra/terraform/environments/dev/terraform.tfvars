@@ -17,6 +17,8 @@ gke_general_max_nodes    = 3
 gke_processing_min_nodes = 0
 gke_processing_max_nodes = 3
 gke_use_preemptible      = true
+# Regional cluster default pool can land in zones with stockout; pin to one zone for dev.
+gke_node_locations = ["us-east1-d"]
 
 sql_tier                  = "db-f1-micro"
 sql_disk_size_gb          = 10

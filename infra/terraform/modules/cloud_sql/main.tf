@@ -9,6 +9,8 @@ resource "google_sql_database_instance" "main" {
   region           = var.region
 
   settings {
+    # db-f1-micro and other shared-core tiers require ENTERPRISE, not ENTERPRISE_PLUS.
+    edition           = "ENTERPRISE"
     tier              = var.tier
     disk_size         = var.disk_size_gb
     disk_type         = "PD_SSD"
@@ -34,10 +36,8 @@ resource "google_sql_database_instance" "main" {
     }
 
     # uuid-ossp: no Cloud SQL instance flag; enabled in-app via Alembic revision 0005_uuid_ossp.
-    database_flags {
-      name  = "cloudsql.enable_pgvector"
-      value = "on"
-    }
+    # pgvector: enable with `CREATE EXTENSION IF NOT EXISTS vector` in Postgres (supported on PG 16;
+    # the legacy instance flag name is rejected for ENTERPRISE / current API).
 
     insights_config {
       query_insights_enabled = true
@@ -45,6 +45,12 @@ resource "google_sql_database_instance" "main" {
   }
 
   deletion_protection = var.environment == "prod"
+
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+  }
 }
 
 resource "google_sql_database" "app" {

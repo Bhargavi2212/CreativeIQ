@@ -65,6 +65,7 @@ module "memorystore" {
 module "gke" {
   source = "./modules/gke"
 
+  environment             = var.environment
   project_id              = var.project_id
   region                  = var.region
   cluster_name            = var.cluster_name
@@ -75,6 +76,7 @@ module "gke" {
   processing_min_nodes    = var.gke_processing_min_nodes
   processing_max_nodes    = var.gke_processing_max_nodes
   use_preemptible         = var.gke_use_preemptible
+  node_locations          = var.gke_node_locations
   master_authorized_cidrs = var.master_authorized_cidrs
 
   depends_on = [module.vpc]

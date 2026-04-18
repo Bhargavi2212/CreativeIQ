@@ -1,3 +1,8 @@
+variable "environment" {
+  type        = string
+  description = "Used for deletion_protection (prod only)."
+}
+
 variable "project_id" {
   type = string
 }
@@ -36,6 +41,12 @@ variable "processing_max_nodes" {
 
 variable "use_preemptible" {
   type = bool
+}
+
+variable "node_locations" {
+  type        = list(string)
+  description = "If non-empty, pin nodes to these zones (regional cluster). Reduces stockout risk in dev."
+  default     = []
 }
 
 variable "master_authorized_cidrs" {

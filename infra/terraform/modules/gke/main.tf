@@ -2,6 +2,10 @@ resource "google_container_cluster" "main" {
   name     = var.cluster_name
   location = var.region
 
+  deletion_protection = var.environment == "prod"
+
+  node_locations = length(var.node_locations) > 0 ? var.node_locations : null
+
   network    = var.network_self_link
   subnetwork = var.subnetwork_self_link
 
@@ -53,12 +57,29 @@ resource "google_container_cluster" "main" {
 
   logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"
+
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+  }
+}
+
+# GKE returns before all control-plane operations finish; creating pools immediately
+# can fail with INVALID_STATE_FOR_UPDATE. Wait, then create pools one at a time.
+resource "time_sleep" "gke_cluster_api_ready" {
+  depends_on      = [google_container_cluster.main]
+  create_duration = "180s"
 }
 
 resource "google_container_node_pool" "general" {
   name     = "general"
   location = var.region
   cluster  = google_container_cluster.main.name
+
+  node_locations = length(var.node_locations) > 0 ? var.node_locations : null
+
+  depends_on = [time_sleep.gke_cluster_api_ready]
 
   autoscaling {
     min_node_count = var.general_min_nodes
@@ -82,12 +103,22 @@ resource "google_container_node_pool" "general" {
     auto_repair  = true
     auto_upgrade = true
   }
+
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+  }
 }
 
 resource "google_container_node_pool" "processing" {
   name     = "processing"
   location = var.region
   cluster  = google_container_cluster.main.name
+
+  node_locations = length(var.node_locations) > 0 ? var.node_locations : null
+
+  depends_on = [google_container_node_pool.general]
 
   autoscaling {
     min_node_count = var.processing_min_nodes
@@ -120,5 +151,11 @@ resource "google_container_node_pool" "processing" {
   management {
     auto_repair  = true
     auto_upgrade = true
+  }
+
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
   }
 }
